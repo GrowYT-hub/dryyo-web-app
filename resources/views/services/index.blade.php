@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'User List')
+@section('title', 'Request List')
 @section('page-header')
     <a data-bs-toggle="modal" data-bs-target="#largemodal">
         <button type="button" class="btn btn-primary">
-            <i class="fe fe-plus me-2"></i> Add New User
+            <i class="fe fe-plus me-2"></i> Add New Request
         </button>
     </a>
 @endsection
@@ -15,22 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="panel panel-primary">
-                        <div class="tab-menu-heading tab-menu-heading-boxed">
-                            <div class="tabs-menu-boxed">
-                                <!-- Tabs -->
-                                <ul class="nav panel-tabs" role="tablist">
-                                    <li><a href="#tab25" class="active" data-bs-toggle="tab" aria-selected="true"
-                                            role="tab">Captain</a></li>
-                                    <li><a href="#tab26" data-bs-toggle="tab" aria-selected="false" role="tab"
-                                            class="" tabindex="-1">User</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="panel-body tabs-menu-body">
-                            <div class="tab-content">
-                                <div class="tab-pane active show" id="tab25" role="tabpanel">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-nowrap border-bottom text-center"
+                    <table class="table table-bordered text-nowrap border-bottom text-center"
                                             id="responsive-datatable">
                                             <thead>
                                                 <tr>
@@ -44,28 +29,6 @@
                                             <tbody>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="tab26" role="tabpanel">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-nowrap border-bottom text-center"
-                                            id="basic-datatable">
-                                            <thead>
-                                                <tr>
-                                                    <th class="wd-15p border-bottom-0">User ID</th>
-                                                    <th class="wd-15p border-bottom-0">User Name</th>
-                                                    <th class="wd-20p border-bottom-0">Mobile No.</th>
-                                                    <th class="wd-15p border-bottom-0">Status</th>
-                                                    <th class="wd-10p border-bottom-0">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +41,7 @@
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add User</h5>
+                    <h5 class="modal-title">Add New Request</h5>
                     <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>

@@ -26,7 +26,7 @@
                                     <i class="fa fa-phone icon_color" aria-label="fa fa-phone"></i>
                                 </a>
                                 <input class="input100 border-start-0 form-control ms-0" name="email" type="email"
-                                    placeholder="Mobile Number">
+                                    placeholder="Email">
                             </div>
                             <label><strong>Password</strong></label>
                             <div class="wrap-input100 validate-input input-group" id="Password-toggle">

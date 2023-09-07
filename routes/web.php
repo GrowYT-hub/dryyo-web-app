@@ -31,6 +31,6 @@ Route::middleware(['auth','role:admin|captain'])->group(function () {
 
 Route::middleware(['auth','role:user'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\ServicesController::class, 'index'])->name('home');
-    Route::resource('users',\App\Http\Controllers\UserController::class);
+    Route::get('/request-form', [App\Http\Controllers\ServicesController::class, 'create'])->name('addNewRequest');
 });
 

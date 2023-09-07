@@ -25,7 +25,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        //
+        return view('services.request-form');
     }
 
     /**

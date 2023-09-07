@@ -158,6 +158,14 @@
                     <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
                 </svg></div>
             <ul class="side-menu">
+                @if(in_array('user',array_column(Auth::guard()->user()->roles->toArray(),'name')))
+                <li class="slide">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/request-form">
+                        <i class="side-menu__icon fe fe-layout"></i>
+                        <span class="side-menu__label">Request Form</span>
+                    </a>
+                </li>
+                @elseif(in_array('admin',array_column(Auth::guard()->user()->roles->toArray(),'name')))
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="/">
                         <i class="side-menu__icon fe fe-layout"></i>
@@ -248,6 +256,10 @@
                         </li>
                     </ul>
                 </li>
+                @else
+                Captain
+                @endif
+               
             </ul>
         </div>
     </div>

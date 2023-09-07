@@ -28,7 +28,7 @@
                                 <input class="input100 border-start-0 form-control ms-0" name="mobile" type="hidden"
                                        placeholder="Mobile Number" value="{{ $mobile }}">
                                 <input class="input100 border-start-0 form-control ms-0" name="otp" type="number"
-                                       placeholder="Mobile Number">
+                                       placeholder="Otp">
                             </div>
 
                             <div class="login100-form-title pb-2">
