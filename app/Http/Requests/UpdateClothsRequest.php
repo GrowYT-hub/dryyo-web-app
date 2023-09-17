@@ -13,7 +13,7 @@ class UpdateClothsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class UpdateClothsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|string',
+            'washing_price' => 'required|string',
+            'iron_price' => 'required|string',
+            'dry_cleaning_price' => 'required|string',
         ];
     }
 }

@@ -16,7 +16,7 @@ class CreateLaundriesTable extends Migration
         Schema::create('laundries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('price');
+            $table->bigInteger('type_id');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

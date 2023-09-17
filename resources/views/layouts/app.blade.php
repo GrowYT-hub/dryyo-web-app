@@ -11,7 +11,7 @@
         content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/brand/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.ico') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -179,99 +179,6 @@
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <!-- Chart code -->
-    <script>
-        am5.ready(function() {
-
-            // Create root element
-            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-            var root = am5.Root.new("chartdiv");
-
-            // Set themes
-            // https://www.amcharts.com/docs/v5/concepts/themes/
-            root.setThemes([
-                am5themes_Animated.new(root)
-            ]);
-
-            // Create chart
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-            var chart = root.container.children.push(am5percent.PieChart.new(root, {
-                radius: am5.percent(90),
-                innerRadius: am5.percent(50),
-                layout: root.horizontalLayout
-            }));
-
-            // Create series
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-            var series = chart.series.push(am5percent.PieSeries.new(root, {
-                name: "Series",
-                valueField: "sales",
-                categoryField: "country"
-            }));
-
-            // Set data
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
-            series.data.setAll([{
-                country: "Confirm Order",
-                sales: 847
-            }, {
-                country: "Processing Order",
-                sales: 897
-            }, {
-                country: "Delivered Order",
-                sales: 805
-            }, {
-                country: "Pending Order",
-                sales: 538
-            }]);
-
-            // Disabling labels and ticks
-            series.labels.template.set("visible", false);
-            series.ticks.template.set("visible", false);
-
-            // Adding gradients
-            series.slices.template.set("strokeOpacity", 0);
-            series.slices.template.set("fillGradient", am5.RadialGradient.new(root, {
-                stops: [{
-                    brighten: -0.8
-                }, {
-                    brighten: -0.8
-                }, {
-                    brighten: -0.5
-                }, {
-                    brighten: 0
-                }, {
-                    brighten: -0.5
-                }]
-            }));
-
-            // Create legend
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/legend-percent-series/
-            var legend = chart.children.push(am5.Legend.new(root, {
-                centerY: am5.percent(50),
-                y: am5.percent(50),
-                layout: root.verticalLayout
-            }));
-            // set value labels align to right
-            legend.valueLabels.template.setAll({
-                textAlign: "bottom"
-            })
-            // set width and max width of labels
-            legend.labels.template.setAll({
-                maxWidth: 140,
-                width: 140,
-                oversizedBehavior: "wrap",
-            });
-
-            legend.data.setAll(series.dataItems);
-
-
-            // Play initial series animation
-            // https://www.amcharts.com/docs/v5/concepts/animations/#Animation_of_series
-            series.appear(1000, 100);
-
-        }); // end am5.ready()
-    </script>
 @stack('js')
 </body>
 

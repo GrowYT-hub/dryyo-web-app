@@ -16,7 +16,10 @@ class CreateClothsTable extends Migration
         Schema::create('cloths', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('price');
+            $table->bigInteger('category_id')->nullable();
+            $table->decimal('washing_price')->default(0);
+            $table->decimal('iron_price');
+            $table->decimal('dry_cleaning_price');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

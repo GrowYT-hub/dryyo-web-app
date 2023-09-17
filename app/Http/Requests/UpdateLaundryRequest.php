@@ -13,7 +13,7 @@ class UpdateLaundryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateLaundryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'category_id' => 'required|string',
+            'name' => 'required|string|max:255',
+            'type_id' => 'required|string'
         ];
     }
 }

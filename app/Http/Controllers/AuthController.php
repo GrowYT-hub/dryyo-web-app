@@ -10,8 +10,12 @@ use Faker\Factory as Faker;
 
 class AuthController extends Controller
 {
+    protected $twilioService;
 
-
+    public function __construct(TwilioService $twilioService)
+    {
+        $this->twilioService = $twilioService;
+    }
     public function sendOtp(Request $request)
     {
         $user = User::with('roles')->where('mobile', $request->input('mobile'))->first();
@@ -33,6 +37,10 @@ class AuthController extends Controller
             'name' => $user->name,
             'mobile'=> $user->mobile,
         )));
+        $to = $user->mobile; // Recipient phone number
+        $message = `Hello {$user->mobile}, Your Otp is a :{$otp}`; // Your SMS message
+
+        $response = $this->twilioService->sendSMS($to, $message);
         // Send the OTP to the user via your preferred method (email, SMS, etc.)
 
         return redirect()->route('user.showVerifyOtp',['mobile'=>$request->input('mobile')]);

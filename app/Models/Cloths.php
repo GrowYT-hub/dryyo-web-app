@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cloths extends Model
 {
     use HasFactory;
+
+    public function categories(){
+        return $this->hasOne(Laundry::class,'id','category_id')->with('types');
+    }
 }

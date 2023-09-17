@@ -9,5 +9,7 @@ class Types extends Model
 {
     use HasFactory;
 
-    protected $table = 'types';
+    public function categories(){
+        return $this->hasMany(Laundry::class,'type_id', 'id')->with('subCategories');
+    }
 }

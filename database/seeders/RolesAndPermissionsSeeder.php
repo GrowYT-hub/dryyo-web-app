@@ -15,13 +15,33 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        // Create permissions
-        Permission::create(['name' => 'edit','guard_name'=> 'web']);
-        Permission::create(['name' => 'delete','guard_name'=> 'web']);
+        $permissionsData = [
+            ['name' => 'edit', 'guard_name' => 'web'],
+            ['name' => 'view', 'guard_name' => 'web'],
+            ['name' => 'delete', 'guard_name' => 'web'],
+            // Add more permissions as needed
+        ];
 
-        // Create roles and assign permissions
-        $adminRole = Role::create(['name' => 'admin','guard_name'=> 'web']);
-        $userRole = Role::create(['name' => 'user','guard_name'=> 'web']);
-        $captainRole = Role::create(['name' => 'captain','guard_name'=> 'web']);
+        foreach ($permissionsData as $permissionData) {
+            $permission = Permission::findOrCreate(
+                $permissionData['name'],
+                $permissionData['guard_name']
+            );
+            $permission->save();
+        }
+
+
+        $rolesData = [
+            ['name' => 'admin', 'guard_name' => 'web'],
+            ['name' => 'user', 'guard_name' => 'web'],
+            ['name' => 'captain', 'guard_name' => 'web'],
+        ];
+        foreach ($rolesData as $rolesDatum) {
+            $roles = Role::findOrCreate(
+                $rolesDatum['name'],
+                $rolesDatum['guard_name']
+            );
+            $roles->save();
+        }
     }
 }

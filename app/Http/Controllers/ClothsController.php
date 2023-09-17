@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClothsRequest;
 use App\Http\Requests\UpdateClothsRequest;
 use App\Models\Cloths;
+use App\Models\Laundry;
 
 class ClothsController extends Controller
 {
@@ -15,8 +16,9 @@ class ClothsController extends Controller
      */
     public function index()
     {
-        $laundry = Cloths::get();
-        return view('cloths.index',compact('laundry'));
+        $laundry = Cloths::with('categories')->get();
+        $categories = Laundry::all();
+        return view('cloths.index',compact('laundry','categories'));
     }
 
     /**
@@ -33,17 +35,20 @@ class ClothsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreClothsRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreClothsRequest $request)
     {
         $cloths = new Cloths();
         $cloths->name = $request->name;
-        $cloths->price = $request->price;
+        $cloths->category_id = $request->category_id;
+        $cloths->washing_price = $request->washing_price;
+        $cloths->iron_price = $request->iron_price;
+        $cloths->dry_cleaning_price = $request->dry_cleaning_price;
         if ($cloths->save()){
             return response()->json([
                 'status'=> true,
-                'message'=> 'New Cloths Added Successfully',
+                'message'=> 'New Sub Category Added Successfully',
                 'data'=> $cloths
             ],200);
         }
@@ -68,11 +73,16 @@ class ClothsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Cloths  $cloths
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit(Cloths $cloths)
+    public function edit(Cloths $cloths, $id)
     {
-        //
+        $cloths = Cloths::with('categories')->find($id);
+        return response()->json([
+            'status'=> true,
+            'message'=> 'Get The Cloth detail',
+            'data'=> $cloths
+        ],200);
     }
 
     /**
@@ -80,25 +90,43 @@ class ClothsController extends Controller
      *
      * @param  \App\Http\Requests\UpdateClothsRequest  $request
      * @param  \App\Models\Cloths  $cloths
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateClothsRequest $request, Cloths $cloths)
+    public function update(UpdateClothsRequest $request, $id)
     {
-        //
+        $cloths = Cloths::with('categories')->find($id);
+        if ($cloths){
+            $cloths->name = $request->name;
+            $cloths->category_id = $request->category_id;
+            $cloths->washing_price = $request->washing_price;
+            $cloths->iron_price = $request->iron_price;
+            $cloths->dry_cleaning_price = $request->dry_cleaning_price;
+            $cloths->save();
+            return response()->json([
+                'status'=> true,
+                'message'=> 'Update the Sub Category detail',
+                'data'=> $cloths
+            ],200);
+        }
+        return response()->json([
+            'status'=> true,
+            'message'=> 'Something Went Wrong!',
+            'data'=> $cloths
+        ],422);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cloths  $cloths
-     * @return \Illuminate\Http\Response
+     * @param  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Cloths $cloths)
+    public function destroy($id)
     {
+        $cloths = Cloths::find($id);
         if ($cloths){
             $cloths->delete();
-
         }
-        return redirect()->route(   'cloths.index')->with('success', 'Cloth deleted successfully.');
+        return redirect()->route(   'sub-category.index')->with('success', 'Cloth deleted successfully.');
     }
 }

@@ -15,6 +15,15 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
+            $table->bigInteger('assigned_id')->nullable();
+            $table->string('name');
+            $table->string('mobile');
+            $table->string('subject');
+            $table->string('address');
+            $table->bigInteger('quantity')->default(0);
+            $table->bigInteger('amount')->default(0);
+            $table->enum('status',['Pending','Assigned','Processing','Confirm','Completed']);
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Otp;
@@ -49,7 +50,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('auth.user-login');
+        return view('auth.login');
     }
 
     /**
@@ -73,5 +74,24 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         return array_merge($request->only($this->username(), 'password'));
+    }
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        if (Auth::guard('web')->user()->hasRole('admin')){
+            $this->redirectTo = RouteServiceProvider::ADMIN_HOME;
+        }
+        if (Auth::guard('web')->user()->hasRole('captain')){
+            $this->redirectTo = RouteServiceProvider::CAPTAIN_HOME;
+        }
+        if (method_exists($this, 'redirectTo')) {
+            return $this->redirectTo();
+        }
+
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
     }
 }

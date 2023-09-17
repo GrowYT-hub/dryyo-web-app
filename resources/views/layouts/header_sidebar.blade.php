@@ -167,37 +167,37 @@
                 </li>
                 @elseif(in_array('admin',array_column(Auth::guard()->user()->roles->toArray(),'name')))
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/dashboard">
                         <i class="side-menu__icon fe fe-layout"></i>
                         <span class="side-menu__label">Dashboard</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/users">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/users">
                         <i class="side-menu__icon fe fe-user"></i>
                         <span class="side-menu__label">User</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/orders">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/new-request-listing">
                         <i class="side-menu__icon fe fe-truck"></i>
                         <span class="side-menu__label">Orders</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/invoice">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/invoice">
                         <i class="side-menu__icon  fe fe-file-text"></i>
                         <span class="side-menu__label">Invoice</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/reports">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/reports">
                         <i class="side-menu__icon fe fe-pie-chart"></i>
                         <span class="side-menu__label">Reports</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/feedback">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/feedback">
                         <i class="side-menu__icon fe fe-edit-3"></i>
                         <span class="side-menu__label">Feedback</span>
                     </a>
@@ -241,12 +241,15 @@
                                         <ul class="sidemenu-list">
                                             <li class="side-menu-label1"><a href="javascript:void(0)"></a></li>
                                             <li class="sub-slide">
-                                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)"><span
-                                                        class="sub-side-menu__label">Category & Subcategory</span><i
-                                                        class="sub-angle fe fe-chevron-right"></i></a>
+                                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                                    <span class="sub-side-menu__label">Category & Subcategory</span>
+                                                    <i class="sub-angle fe fe-chevron-right"></i>
+                                                </a>
                                                 <ul class="sub-slide-menu">
-                                                    <li><a class="sub-slide-item" href="/laundry">Laundry</a></li>
-                                                    <li><a class="sub-slide-item" href="/cloths">Cloths</a></li>
+                                                    <li><a class="sub-slide-item" href="/admin/types">Type</a></li>
+                                                    <li><a class="sub-slide-item" href="/admin/category">Category</a></li>
+                                                    <li><a class="sub-slide-item" href="/admin/sub-category">Subcategory</a></li>
+
                                                 </ul>
                                             </li>
                                         </ul>
@@ -256,10 +259,8 @@
                         </li>
                     </ul>
                 </li>
-                @else
-                Captain
                 @endif
-               
+
             </ul>
         </div>
     </div>
