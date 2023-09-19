@@ -278,6 +278,42 @@
             </div>
         </div>
     </div>
+    <!-- The Modal End -->
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="{{ asset('assets/img/feedback.png') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <form action="{{ route('feedback.add.new') }}" method="POST">
+                                @csrf
+                                <label for="to">Whatsapp Number</label>
+                                <input type="text" id="to" name="to"
+                                       placeholder="Enter Your Whatsapp Number">
+                                <label for="subject">Enter Your Feedback</label>
+                                <textarea id="subject" name="subject" placeholder="Write something.." style="height:350px"></textarea>
+
+                                <center><input class="text-center" type="submit" value="Submit"></center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')

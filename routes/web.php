@@ -22,6 +22,7 @@ Route::get('/admin/login', [App\Http\Controllers\Auth\LoginController::class, 's
 Route::post('send-otp', [\App\Http\Controllers\AuthController::class, 'sendOtp'])->name('user.sendOtp');
 Route::post('verify-otp', [\App\Http\Controllers\AuthController::class, 'verifyOtp'])->name('user.verifyOtp');
 Route::get('verify-otp/{mobile}', [\App\Http\Controllers\AuthController::class, 'showVerifyOtp'])->name('user.showVerifyOtp');
+Route::post('/feedback/add-new-feedback', [App\Http\Controllers\FeedbackController::class,'store'])->name('feedback.add.new');
 
 Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
@@ -35,6 +36,8 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
     Route::resource('users',\App\Http\Controllers\UserController::class);
     Route::resource('category', \App\Http\Controllers\LaundryController::class)->middleware('role:admin');
     Route::resource('sub-category', \App\Http\Controllers\ClothsController::class)->middleware('role:admin');
+    Route::resource('setting', \App\Http\Controllers\SettingController::class);
+    Route::post('setting/update-social-media-link', [\App\Http\Controllers\SettingController::class,'updateSocialMediaLink'])->name('setting.updateSocialMediaLink');
 });
 
 Route::middleware(['auth','role:captain'])->prefix('captain')->group(function () {

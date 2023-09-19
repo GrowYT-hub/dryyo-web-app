@@ -11,7 +11,7 @@
             <a data-toggle="modal" data-target="#myModal" class="slide__text-link" style="font-family: 'Roboto', sans-serif;">Schedule Pickup</a>
         </ul>
         <h1 class="logo">
-            <img src="{{ asset('assets/user/img/logo.jpg') }}">
+            <img src="{{ asset('assets/img/logo.jpg') }}">
         </h1>
     </div>
 </nav>

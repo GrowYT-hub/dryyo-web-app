@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
 use App\Models\Feedback;
+use App\Models\User;
+use Faker\Factory as Faker;
 
 class FeedbackController extends Controller
 {
@@ -33,11 +35,28 @@ class FeedbackController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreFeedbackRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreFeedbackRequest $request)
     {
-        //
+        $users = User::where('mobile',$request->to)->first();
+        if (!$users){
+            $faker = Faker::create();
+            $users = User::create([
+                'name' => $faker->name(),
+                'email' => $faker->unique()->safeEmail,
+                'mobile' => $request->input('to'),
+                'password' => bcrypt('password'), // Hashed password
+            ]);
+            $users->assignRole('user'); // Assign admin role
+        }
+        $feedback = new Feedback();
+        $feedback->user_id = $users->id;
+        $feedback->feedback = $request->subject;
+        if ($feedback->save()){
+            return redirect()->back()->with('error','Feedback Added Successfully');
+        }
+        return redirect()->back()->with('error','Something Went Wrong!');
     }
 
     /**

@@ -1,4 +1,6 @@
-
+@php
+    $settings = \App\Models\Setting::where('user_id', \Illuminate\Support\Facades\Auth::guard()->user()->id)->first();
+@endphp
 <!-- app-Header -->
 <div class="app-header header sticky">
     <div class="container-fluid main-container">
@@ -6,8 +8,8 @@
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)"></a>
             <!-- sidebar-toggle-->
             <a class="logo-horizontal " href="/dashboard">
-                <img src="{{ asset('assets/images/brand/logo-white.png') }}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{{ asset('assets/images/brand/logo-dark.png') }}" class="header-brand-img light-logo1"
+                <img src="{{ asset('assets/img/logo.jpg') }}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{{ asset('assets/img/logo.jpg') }}" class="header-brand-img light-logo1"
                     alt="logo">
             </a>
             <!-- LOGO -->
@@ -143,11 +145,12 @@
     <div class="app-sidebar">
         <div class="side-header pb-6">
             <a class="header-brand1" href="index.html">
-                <img src="{{ asset('assets/images/brand/logo-white.png') }}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{{ asset('assets/images/brand/icon-white.png') }}" class="header-brand-img toggle-logo"
+
+                <img src="{{  Storage::url($settings->logo) }}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{{ Storage::url($settings->logo) }}" class="header-brand-img toggle-logo"
                     alt="logo">
-                <img src="{{ asset('assets/images/brand/icon-dark.png') }}" class="header-brand-img light-logo" alt="logo">
-                <img src="{{ asset('assets/images/brand/logo-dark.png') }}" class="header-brand-img light-logo1"
+                <img src="{{ Storage::url($settings->logo) }}" class="header-brand-img light-logo" alt="logo">
+                <img src="{{ Storage::url($settings->logo) }}" class="header-brand-img light-logo1"
                     alt="logo">
             </a>
             <!-- LOGO -->
@@ -221,10 +224,7 @@
                                                         class="sub-side-menu__label">Settings</span><i
                                                         class="sub-angle fe fe-chevron-right"></i></a>
                                                 <ul class="sub-slide-menu">
-                                                    <li><a class="sub-slide-item" href="/logo">Logos & Footer</a></li>
-                                                    <li><a class="sub-slide-item" href="/notification">Notifications</a></li>
-
-                                                    <li><a class="sub-slide-item" href="javascript:void(0)">demo</a></li>
+                                                    <li><a class="sub-slide-item" href="{{ route('setting.index') }}">Logos & Footer</a></li>
                                                 </ul>
                                             </li>
                                         </ul>

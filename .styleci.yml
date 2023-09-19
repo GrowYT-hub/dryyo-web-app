@@ -5,8 +5,8 @@ php:
     - no_unused_imports
   finder:
     not-name:
-      - index.php
-      - index.php
+      - server.php
+      - server.php
 js:
   finder:
     not-name:

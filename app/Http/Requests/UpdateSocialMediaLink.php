@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFeedbackRequest extends FormRequest
+class UpdateSocialMediaLink extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class StoreFeedbackRequest extends FormRequest
     public function rules()
     {
         return [
-            "to" => "required|string",
-            "subject" => "required|string",
+            //
         ];
     }
 }
