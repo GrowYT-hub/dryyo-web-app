@@ -1,0 +1,12 @@
+ # Remove public URL from the path
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L,QSA]
+    
+     # Remove public URL from the path
+    RewriteCond %{REQUEST_URI} !^/public/admin/
+    RewriteRule ^admin/(.*)$ /public/admin/$1 [L,QSA]
+    
+    
+     # Remove public URL from the path
+    RewriteCond %{REQUEST_URI} !^/public/captain/
+    RewriteRule ^captain/(.*)$ /public/captain/$1 [L,QSA]

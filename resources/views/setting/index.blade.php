@@ -2,6 +2,9 @@
 
 @section('title', 'Logo & Footer')
 @section('content')
+@php
+    $settingsdata = \App\Models\Setting::first();
+@endphp
     <!-- Row -->
     @if (session('success'))
         <div class="alert alert-success">
@@ -63,7 +66,7 @@
                                                             <span class="input-group-text" id="basic-addon1">
                                                                 <i class="fa fa-facebook" aria-hidden="true"></i>
                                                             </span>
-                                        <input type="text" class="form-control" name="facebook_link" placeholder="Facebook Link" aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text" value="{{$settingsdata->facebook_link}}" class="form-control" name="facebook_link" placeholder="Facebook Link" aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +76,7 @@
                                                             <span class="input-group-text" id="basic-addon1">
                                                                 <i class="fa fa-instagram" aria-hidden="true"></i>
                                                             </span>
-                                        <input type="text" class="form-control" name="instagram_link" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text" value="{{$settingsdata->instagram_link}}" class="form-control" name="instagram_link" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +86,7 @@
                                                             <span class="input-group-text" id="basic-addon1">
                                                                 <i class="fa fa-youtube-play" aria-hidden="true"></i>
                                                             </span>
-                                        <input type="text" class="form-control" name="youtube_link" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text" value="{{$settingsdata->youtube_link}}" class="form-control" name="youtube_link" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +96,7 @@
                                                             <span class="input-group-text" id="basic-addon1">
                                                                 <i class="fa fa-linkedin" aria-hidden="true"></i>
                                                             </span>
-                                        <input type="text" class="form-control" name="linkedin_link" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text" class="form-control" value="{{$settingsdata->linkedin_link}}" name="linkedin_link" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>

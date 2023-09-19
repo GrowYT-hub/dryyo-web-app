@@ -1,3 +1,6 @@
+@php
+    $settings = \App\Models\Setting::first();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +12,7 @@
     <meta name="keywords"
           content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
     <!-- FAVICON -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{url('public/'.$settings->favicon_icon) }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

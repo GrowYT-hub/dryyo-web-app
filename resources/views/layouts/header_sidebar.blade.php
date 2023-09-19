@@ -146,11 +146,11 @@
         <div class="side-header pb-6">
             <a class="header-brand1" href="index.html">
 
-                <img src="{{  Storage::url($settings->logo) }}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{{ Storage::url($settings->logo) }}" class="header-brand-img toggle-logo"
+                 <img src="{{url('public/'.$settings->logo) }}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{{url('public/'.$settings->logo) }}" class="header-brand-img toggle-logo"
                     alt="logo">
-                <img src="{{ Storage::url($settings->logo) }}" class="header-brand-img light-logo" alt="logo">
-                <img src="{{ Storage::url($settings->logo) }}" class="header-brand-img light-logo1"
+                <img src="{{url('public/'.$settings->logo) }}" class="header-brand-img light-logo" alt="logo">
+                <img src="{{url('public/'.$settings->logo) }}" class="header-brand-img light-logo1"
                     alt="logo">
             </a>
             <!-- LOGO -->

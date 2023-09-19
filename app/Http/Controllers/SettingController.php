@@ -38,9 +38,27 @@ class SettingController extends Controller
      */
     public function store(StoreSettingRequest $request)
     {
-        $logoPath = $request->file('logo')->store('uploads');
-        $footerLogoPath = $request->file('footer_logo')->store('uploads');
-        $faviconIconPath = $request->file('favicon_icon')->store('uploads');
+        //$logoPath = $request->file('logo')->store('uploads');
+        
+        $file = $request->file('logo');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $fileName);
+        $logoPath = 'uploads/'.$fileName; 
+        
+        
+       # $footerLogoPath = $request->file('footer_logo')->store('uploads');
+       $file = $request->file('footer_logo');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $fileName);
+        $footerLogoPath = 'uploads/'.$fileName;
+       
+       
+        #$faviconIconPath = $request->file('favicon_icon')->store('uploads');
+         $file = $request->file('favicon_icon');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $fileName);
+        $faviconIconPath = 'uploads/'.$fileName;
+        
         $setting = Setting::where('user_id',Auth::guard()->user()->id)->first();
         if (!$setting){
             $setting = new Setting();

@@ -1,4 +1,6 @@
-
+@php
+    $settings = \App\Models\Setting::first();
+@endphp
 <nav class="navbar">
     <div class="navbar-container container">
         <input type="checkbox" name="" id="">
@@ -11,7 +13,7 @@
             <a data-toggle="modal" data-target="#myModal" class="slide__text-link" style="font-family: 'Roboto', sans-serif;">Schedule Pickup</a>
         </ul>
         <h1 class="logo">
-            <img src="{{ asset('assets/img/logo.jpg') }}">
+            <img src="{{url('public/'.$settings->logo) }}">
         </h1>
     </div>
 </nav>
