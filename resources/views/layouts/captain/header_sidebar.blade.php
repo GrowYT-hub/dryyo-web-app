@@ -161,106 +161,103 @@
                 </svg></div>
             <ul class="side-menu">
                 @if(in_array('user',array_column(Auth::guard()->user()->roles->toArray(),'name')))
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/request-form">
-                        <i class="side-menu__icon fe fe-layout"></i>
-                        <span class="side-menu__label">Request Form</span>
-                    </a>
-                </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/request-form">
+                            <i class="side-menu__icon fe fe-layout"></i>
+                            <span class="side-menu__label">Request Form</span>
+                        </a>
+                    </li>
                 @elseif(in_array('admin',array_column(Auth::guard()->user()->roles->toArray(),'name')))
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/dashboard">
-                        <i class="side-menu__icon fe fe-layout"></i>
-                        <span class="side-menu__label">Dashboard</span>
-                    </a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/users">
-                        <i class="side-menu__icon fe fe-user"></i>
-                        <span class="side-menu__label">User</span>
-                    </a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/orders">
-                        <i class="side-menu__icon fe fe-truck"></i>
-                        <span class="side-menu__label">Orders</span>
-                    </a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/invoice">
-                        <i class="side-menu__icon  fe fe-file-text"></i>
-                        <span class="side-menu__label">Invoice</span>
-                    </a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/reports">
-                        <i class="side-menu__icon fe fe-pie-chart"></i>
-                        <span class="side-menu__label">Reports</span>
-                    </a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="/feedback">
-                        <i class="side-menu__icon fe fe-edit-3"></i>
-                        <span class="side-menu__label">Feedback</span>
-                    </a>
-                </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/dashboard">
+                            <i class="side-menu__icon fe fe-layout"></i>
+                            <span class="side-menu__label">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/users">
+                            <i class="side-menu__icon fe fe-user"></i>
+                            <span class="side-menu__label">User</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/new-request-listing">
+                            <i class="side-menu__icon fe fe-truck"></i>
+                            <span class="side-menu__label">Orders</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/invoice">
+                            <i class="side-menu__icon  fe fe-file-text"></i>
+                            <span class="side-menu__label">Invoice</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/reports">
+                            <i class="side-menu__icon fe fe-pie-chart"></i>
+                            <span class="side-menu__label">Reports</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/feedback">
+                            <i class="side-menu__icon fe fe-edit-3"></i>
+                            <span class="side-menu__label">Feedback</span>
+                        </a>
+                    </li>
 
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
-                        <i class="side-menu__icon fe fe-cpu"></i>
-                        <span class="side-menu__label">General Settings</span><i
-                            class="angle fe fe-chevron-right"></i>
-                    </a>
-                    <ul class="slide-menu">
-                        <li class="panel sidetab-menu">
-                            <div class="panel-body tabs-menu-body p-0 border-0">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="side25">
-                                        <ul class="sidemenu-list">
-                                            <li class="side-menu-label1"><a href="javascript:void(0)">Submenu items</a></li>
-                                            <li class="sub-slide">
-                                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)"><span
-                                                        class="sub-side-menu__label">Settings</span><i
-                                                        class="sub-angle fe fe-chevron-right"></i></a>
-                                                <ul class="sub-slide-menu">
-                                                    <li><a class="sub-slide-item" href="/logo">Logos & Footer</a></li>
-                                                    <li><a class="sub-slide-item" href="/notification">Notifications</a></li>
-
-                                                    <li><a class="sub-slide-item" href="javascript:void(0)">demo</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                            <i class="side-menu__icon fe fe-cpu"></i>
+                            <span class="side-menu__label">General Settings</span><i
+                                    class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li class="panel sidetab-menu">
+                                <div class="panel-body tabs-menu-body p-0 border-0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="side25">
+                                            <ul class="sidemenu-list">
+                                                <li class="side-menu-label1"><a href="javascript:void(0)">Submenu items</a></li>
+                                                <li class="sub-slide">
+                                                    <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)"><span
+                                                                class="sub-side-menu__label">Settings</span><i
+                                                                class="sub-angle fe fe-chevron-right"></i></a>
+                                                    <ul class="sub-slide-menu">
+                                                        <li><a class="sub-slide-item" href="{{ route('setting.index') }}">Logos & Footer</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="slide-menu">
-                        <li class="panel sidetab-menu">
-                            <div class="panel-body tabs-menu-body p-0 border-0">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="side25">
-                                        <ul class="sidemenu-list">
-                                            <li class="side-menu-label1"><a href="javascript:void(0)"></a></li>
-                                            <li class="sub-slide">
-                                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
-                                                    <span class="sub-side-menu__label">Category & Subcategory</span>
-                                                    <i class="sub-angle fe fe-chevron-right"></i>
-                                                </a>
-                                                <ul class="sub-slide-menu">
-                                                    <li><a class="sub-slide-item" href="types">Type</a></li>
-                                                    <li><a class="sub-slide-item" href="category">Category</a></li>
-                                                    <li><a class="sub-slide-item" href="sub-category">Subcategory</a></li>
+                            </li>
+                        </ul>
+                        <ul class="slide-menu">
+                            <li class="panel sidetab-menu">
+                                <div class="panel-body tabs-menu-body p-0 border-0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="side25">
+                                            <ul class="sidemenu-list">
+                                                <li class="side-menu-label1"><a href="javascript:void(0)"></a></li>
+                                                <li class="sub-slide">
+                                                    <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                                        <span class="sub-side-menu__label">Category & Subcategory</span>
+                                                        <i class="sub-angle fe fe-chevron-right"></i>
+                                                    </a>
+                                                    <ul class="sub-slide-menu">
+                                                        <li><a class="sub-slide-item" href="/admin/types">Type</a></li>
+                                                        <li><a class="sub-slide-item" href="/admin/category">Category</a></li>
+                                                        <li><a class="sub-slide-item" href="/admin/sub-category">Subcategory</a></li>
 
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
 
             </ul>
