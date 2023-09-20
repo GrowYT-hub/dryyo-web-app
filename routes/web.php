@@ -43,12 +43,12 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth','role:captain'])->prefix('captain')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'captainHome'])->name('captain.dashboard');
     Route::post('order/payment', [App\Http\Controllers\OrderController::class,'payment'])->name('order.payment');
-    Route::resource('cart', App\Http\Controllers\CartController::class);
 });
 
 Route::middleware(['auth','role:captain|admin'])->prefix('captain')->group(function () {
     Route::resource('order', App\Http\Controllers\OrderController::class);
     Route::get('/send-sms', [\App\Http\Controllers\SMSController::class, 'sendSMS'])->name('send.sms');
+    Route::resource('cart', App\Http\Controllers\CartController::class);
 });
 
 

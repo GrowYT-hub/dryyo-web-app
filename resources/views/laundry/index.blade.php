@@ -164,7 +164,7 @@
                     // Handle the response
                     toastr.success(response.message);
                     $('#largemodal').modal('hide');
-                    // window.location.reload();
+                    window.location.reload();
                 },
                 error: function(xhr, status, error) {
                     // Handle errors

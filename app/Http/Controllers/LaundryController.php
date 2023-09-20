@@ -16,7 +16,7 @@ class LaundryController extends Controller
      */
     public function index()
     {
-        $laundry = Laundry::with('types')->get();
+        $laundry = Laundry::with('types')->orderBy('id','desc')->get();
         $types = Types::all();
         return view('laundry.index', compact('laundry','types'));
     }

@@ -56,10 +56,18 @@
                                                                 <div class="w-50">
                                                                     <div class="input-group input-indec input-indec1">
                                                                             <span class="input-group-btn">
-                                                                                <button type="button"
-                                                                                        class="minus btn btn-white btn-number btn-icon br-7" onclick="onIncreaseDescrease({{ $subCategories->id }},'Decrease')">
+                                                                                @if($services->status === "Completed")
+                                                                                    <button type="button"
+                                                                                            class="minus btn btn-white btn-number btn-icon br-7" disabled >
                                                                                     <i class="fa fa-minus text-muted"></i>
                                                                                 </button>
+                                                                                @else
+                                                                                    <button type="button"
+                                                                                            class="minus btn btn-white btn-number btn-icon br-7" onclick="onIncreaseDescrease({{ $subCategories->id }},'Decrease')" >
+                                                                                    <i class="fa fa-minus text-muted"></i>
+                                                                                </button>
+                                                                                @endif
+
                                                                             </span>
                                                                         @if($exists)
                                                                             <input type="text" name="quantity"
@@ -68,14 +76,22 @@
                                                                         @else
                                                                             <input type="text" name="quantity"
                                                                                    class="form-control text-center qty"
-                                                                                   value="1">
+                                                                                   value="0">
                                                                         @endif
 
                                                                         <span class="input-group-btn">
+                                                                            @if($services->status === "Completed")
+                                                                                <button type="button"
+                                                                                        class="quantity-right-plus btn btn-white btn-number btn-icon br-7 add" disabled>
+                                                                                    <i class="fa fa-plus text-muted"></i>
+                                                                                </button>
+                                                                            @else
                                                                                 <button type="button"
                                                                                         class="quantity-right-plus btn btn-white btn-number btn-icon br-7 add" onclick="onIncreaseDescrease({{ $subCategories->id }},'Increase')">
                                                                                     <i class="fa fa-plus text-muted"></i>
                                                                                 </button>
+                                                                            @endif
+
                                                                             </span>
                                                                     </div>
                                                                 </div>
@@ -137,7 +153,12 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#order-submit">
-                        <button class="btn btn-primary" onclick="onOrderplace()">Order Place</button>
+                        @if(in_array('captain',array_column(Auth::guard()->user()->roles->toArray(),'name')))
+                            <button class="btn btn-primary" onclick="onOrderplace()">Order Place</button>
+                        @else
+                            <button class="btn btn-primary" disabled onclick="onOrderplace()">Order Place</button>
+                        @endif
+
                     </a>
                 </div>
             </div>
@@ -170,67 +191,113 @@
                     // Handle the response
                     var html = '<form id="view-cart-form">';
                     response.data.map((value, key)=>{
-                        html += `<div class="dropdown-item d-flex p-4">
-                                    <div class="wd-50p">
-                                        <h5 class="mb-5 card-title">${value.types.name}</h5>
-                                        <div class="d-flex">
-                                            <div class="w-50 mb-2">
-                                                <input type="hidden" name="cart_id" value="${value.id}">
-                                                <div class="input-group input-indec input-indec1">
-                                                <span class="input-group-btn">
-                                                    <button type="button"
-                                                            class="minus btn btn-white btn-number btn-icon br-7 ">
-                                                        <i class="fa fa-minus text-muted"></i>
-                                                    </button>
-                                                </span>
-                                                    <input type="text" name="quantity" class="form-control text-center qty"
-                                                           value="${value.quantity}">
-                                                    <span class="input-group-btn">
-                                                    <button type="button"
-                                                            class="quantity-right-plus btn btn-white btn-number btn-icon br-7 add">
-                                                        <i class="fa fa-plus text-muted"></i>
-                                                    </button>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex mt-5">
-                                            <div class="w-40">
-                                                <label class="custom-control custom-checkbox">
+
+                        var washing_price_checkbox = '';
+                        if (value?.orders?.washing_price > 0){
+                            washing_price_checkbox += `
+                            <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                           name="washing_price" checked="checked" value="${value.washing_price}">
+                                                    <span class="custom-control-label">Washing (${value.washing_price})</span>
+                                                </label>
+                            `
+                        }else {
+                            washing_price_checkbox += `
+                            <label class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input"
                                                            name="washing_price" value="${value.washing_price}">
                                                     <span class="custom-control-label">Washing (${value.washing_price})</span>
                                                 </label>
-                                            </div>
-                                            <div class="w-30">
-                                                <label class="custom-control custom-checkbox">
+                            `
+                        }
+
+                        var iron_price_checkbox = '';
+                        if (value?.orders?.iron_price > 0){
+                            iron_price_checkbox += `
+                            <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                           name="iron_price" checked="checked" value="${value.iron_price}">
+                                                    <span class="custom-control-label">Iron (${value.iron_price})</span>
+                                                </label>
+                            `
+                        }else {
+                            iron_price_checkbox += `
+                            <label class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input"
                                                            name="iron_price" value="${value.iron_price}">
                                                     <span class="custom-control-label">Iron (${value.iron_price})</span>
                                                 </label>
-                                            </div>
-                                            <div class="w-30">
-                                                <label class="custom-control custom-checkbox">
+                            `
+                        }
+
+                        var dry_clean_price_checkbox = '';
+                        if (value?.orders?.dry_cleaning_price > 0){
+                            dry_clean_price_checkbox += `
+                            <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                           name="dry_cleaning_price" checked="checked" value="${value.dry_cleaning_price}">
+                                                    <span class="custom-control-label">Dry cleaning (${value.dry_cleaning_price})</span>
+                                                </label>
+                            `
+                        }else {
+                            dry_clean_price_checkbox += `
+                            <label class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input"
                                                            name="dry_cleaning_price" value="${value.dry_cleaning_price}">
                                                     <span class="custom-control-label">Dry cleaning (${value.dry_cleaning_price})</span>
                                                 </label>
+                            `
+                        }
+                        html += `<div class="dropdown-item d-flex p-4">
+                                    <div class="wd-50p">
+                                            <h5 class="mb-5 card-title">${value.sub_categories.name} (${value.types.name})</h5>
+                                            <div class="d-flex">
+                                                <div class="w-50 mb-2">
+                                                    <input type="hidden" name="cart_id" value="${value.id}">
+                                                    <div class="input-group input-indec input-indec1">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                                class="minus btn btn-white btn-number btn-icon br-7 minus ">
+                                                            <i class="fa fa-minus text-muted"></i>
+                                                        </button>
+                                                    </span>
+                                                        <input type="text" name="quantity" class="form-control text-center qty"
+                                                               value="${value.quantity}">
+                                                        <span class="input-group-btn">
+                                                        <button type="button"
+                                                                class="quantity-right-plus btn btn-white btn-number btn-icon br-7 add">
+                                                            <i class="fa fa-plus text-muted"></i>
+                                                        </button>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex mt-5">
+                                                <div class="w-40">
+                                                    ${washing_price_checkbox}
+                                                </div>
+                                                <div class="w-30">
+                                                    ${iron_price_checkbox}
+                                                </div>
+                                                <div class="w-30">
+                                                    ${dry_clean_price_checkbox}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     <div class="ms-auto text-end d-flex fs-16">
                                     <span id="total-amount-${key}" class="fs-16 text-dark d-none d-sm-block px-4">
-                                        $0
+                                        0
                                     </span>
-                                        <a href="javascript:void(0)" class="fs-16 btn p-0 cart-trash">
+                                        <button  type="button" onclick="onDeleteCart(${value.id})" class="fs-16 btn p-0 cart-trash">
                                             <i class="fe fe-trash-2 border text-danger brround d-block p-2"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>`
                     })
                     html += `</form>`
                     $('#cart-list').html(html)
                     toastr.success(response.message);
+                    calculateTotalAmount();
                 },
                 error: function (xhr, status, error) {
                     // Handle errors
@@ -247,7 +314,7 @@
 
         function onIncreaseDescrease(id, type = 'Increase') {
             setTimeout(()=>{
-                const form_id = '#view-cart-'+id
+                let form_id = '#view-cart-'+id
                 const formData = $(form_id).serializeArray();
                 const newParam = {
                     name: 'request_id',
@@ -266,6 +333,7 @@
                     success: function (response) {
                         // Handle the response
                         toastr.success(response.message);
+                        viewCart()
                     },
                     error: function (xhr, status, error) {
                         // Handle errors
@@ -305,15 +373,17 @@
                 }
                 finalTotalAmount += totalAmount
                 // Update the total amount label with the calculated value.
-                $('#total-amount-'+i).text('$' + totalAmount.toFixed(2));
+                $('#total-amount-'+i).text('₹' + totalAmount.toFixed(2));
                 i++;
             });
-            $('#final-total').text('Total: $'+finalTotalAmount.toFixed(2))
+            console.log(finalTotalAmount, "finalTotalAmount")
+            $('#final-total').text('Total: ₹'+finalTotalAmount.toFixed(2))
 
         }
 
         function onOrderplace() {
             const formData = $('#view-cart-form').serializeArray();
+            console.log(formData)
             const structuredResponse = convertToStructuredResponse(formData);
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
@@ -368,6 +438,33 @@
             }
 
             return structuredResponse;
+        }
+
+        function onDeleteCart(cart_id) {
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/captain/cart/'+cart_id, // URL of the endpoint you defined
+                type: 'DELETE', // or 'POST', 'PUT', etc.
+                dataType: 'json', // Expected data type of the response
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
+                },
+                success: function (response) {
+                    // Handle the response
+                    toastr.success(response.message);
+                    viewCart()
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        showToasts(errors);
+                    } else {
+                        console.error(error);
+                    }
+                }
+
+            });
         }
 
     </script>

@@ -222,8 +222,10 @@
                 success: function (response) {
                     // Handle the response
                     toastr.success(response.message);
-                    $('#largemodal').modal('hide');
-                    window.location.reload();
+                    setTimeout(()=>{
+                        $('#largemodal').modal('hide');
+                        window.location.reload();
+                    },500)
                 },
                 error: function (xhr, status, error) {
                     // Handle errors

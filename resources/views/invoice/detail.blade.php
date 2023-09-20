@@ -55,7 +55,23 @@
                             @if(count($invoice->carts))
                                 @foreach($invoice->carts as $key=>$value)
                                     @php
-                                        $total = (integer)$value->iron_price + (integer)$value->dry_cleaning_price + (integer)$value->washing_price;
+                                        $total = 0;
+                                        $quantity = 0;
+                                        foreach ($value->orders as $item) {
+                                            if ($item->washing_price > 0){
+                                                $total += ((integer)$item->washing_price);
+                                                $quantity += ((integer)$item->quantity);
+                                            }
+                                            if ($item->iron_price > 0){
+                                                $total += ((integer)$item->iron_price);
+                                                $quantity += ((integer)$item->quantity);
+                                            }
+                                            if ($item->dry_cleaning_price > 0){
+                                                $total += ((integer)$item->dry_cleaning_price);
+                                                $quantity += ((integer)$item->quantity);
+                                            }
+                                        }
+                                        dd($total , $invoice->quantity, $invoice->amount);
                                         $finalAmount = $total * (integer)$value->quantity;
                                     @endphp
                                     <tr>

@@ -17,10 +17,11 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->bigInteger('request_id');
             $table->bigInteger('cart_id');
-            $table->bigInteger('quantity');
             $table->bigInteger('washing_price')->nullable();
             $table->bigInteger('iron_price')->nullable();
             $table->bigInteger('dry_cleaning_price')->nullable();
+            $table->bigInteger('quantity');
+            $table->bigInteger('total')->default(0);
             $table->timestamps();
         });
     }

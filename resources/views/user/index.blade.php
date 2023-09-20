@@ -202,8 +202,14 @@
                 scrollX: "100%",
                 sSearch: '',
             },
-
         });
+        $('#basic-datatable').DataTable({
+            language: {
+                searchPlaceholder: 'Search...',
+                scrollX: "100%",
+                sSearch: '',
+            },
+        })
         function onSubmit() {
             const formData = $('#add-new-user').serializeArray();
             const csrfToken = $('meta[name="csrf-token"]').attr('content');

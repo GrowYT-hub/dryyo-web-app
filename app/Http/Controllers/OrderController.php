@@ -64,13 +64,17 @@ class OrderController extends Controller
             $total = ($washing_price + $iron_price + $dry_cleaning_price) * $quantity;
             $totalAmount += $total;
             $totalQuantity += $quantity;
-            $orders = new Order();
+            $orders = Order::where('cart_id',$cartDatum['cart_id'])->first();
+            if (!$orders){
+                $orders = new Order();
+                $orders->cart_id = $cartDatum['cart_id'];
+            }
             $orders->request_id = $request_id;
-            $orders->cart_id = $cartDatum['cart_id'];
             $orders->quantity = $quantity;
             $orders->washing_price = $washing_price;
             $orders->iron_price = $iron_price;
             $orders->dry_cleaning_price = $dry_cleaning_price;
+            $orders->total = $total;
             $orders->save();
         }
         $services->quantity = $totalQuantity;
@@ -188,13 +192,14 @@ class OrderController extends Controller
         foreach ($labels as $label) {
             $exists = $totalOrders->where('month_name',$label)->pluck('total')->toArray();
             if ($exists){
-                $orders[$label] = $exists[0];
+                $orders[$label] = count($exists) > 0? $exists[0]:0;
             }else{
                 $orders[$label] = 0;
             }
             $salesExists = $totalSalesOrders->where('month_name',$label)->pluck('total')->toArray();
+
             if ($salesExists){
-                $totalSales[$label] = $exists[0];
+                $totalSales[$label] = count($salesExists) > 0? $salesExists[0]:0;
             }else{
                 $totalSales[$label] = 0;
             }

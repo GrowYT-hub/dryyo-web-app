@@ -45,19 +45,33 @@ class CartController extends Controller
         if (!$cart){
             $cart = new Cart();
         }
-        $cart->user_id = Auth::user()->id;
-        $cart->request_id = $request->request_id;
-        $cart->categories_id = $request->categories_id;
-        $cart->sub_categories_id = $subCategories->id;
-        $cart->type_id = $request->type_id;
-        $cart->quantity = $request->quantity;
-        $cart->dry_cleaning_price = $subCategories->dry_cleaning_price;
-        $cart->iron_price = $subCategories->iron_price;
-        $cart->washing_price = $subCategories->washing_price;
-        if ($cart->save()){
+        if ((integer)$request->quantity > 0){
+            $cart->user_id = Auth::user()->id;
+            $cart->request_id = $request->request_id;
+            $cart->categories_id = $request->categories_id;
+            $cart->sub_categories_id = $subCategories->id;
+            $cart->type_id = $request->type_id;
+            $cart->quantity = $request->quantity;
+            $cart->dry_cleaning_price = $subCategories->dry_cleaning_price;
+            $cart->iron_price = $subCategories->iron_price;
+            $cart->washing_price = $subCategories->washing_price;
+            if ($cart->save()){
+                return response()->json([
+                    'status'=> true,
+                    'message'=> 'Cart Add or Updated Successfully',
+                    'data'=> $cart
+                ],200);
+            }
+            return response()->json([
+                'status'=> false,
+                'message'=> 'Something Went Wrong!'
+            ],422);
+        }
+        if ($cart){
+            $cart->delete();
             return response()->json([
                 'status'=> true,
-                'message'=> 'Cart Add or Updated Successfully',
+                'message'=> 'Your cart has been deleted successfully',
                 'data'=> $cart
             ],200);
         }
@@ -97,7 +111,7 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-        $carts = Cart::with(['types','categories','subCategories'])->where(['request_id'=>$id])->get();
+        $carts = Cart::with(['types','categories','subCategories','orders'])->where(['request_id'=>$id])->get();
         if ($carts){
             return response()->json([
                 'status'=> true,
@@ -127,10 +141,21 @@ class CartController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Cart $cart)
     {
-        //
+        if ($cart){
+            $cart->delete();
+            return response()->json([
+                'status'=> true,
+                'message'=> 'Your cart has been deleted successfully',
+                'data'=> $cart
+            ],200);
+        }
+        return response()->json([
+            'status'=> false,
+            'message'=> 'Something Went Wrong!'
+        ],422);
     }
 }

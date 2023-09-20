@@ -12,11 +12,11 @@ class ClothsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        $laundry = Cloths::with('categories')->get();
+        $laundry = Cloths::with('categories')->orderBy('id','desc')->get();
         $categories = Laundry::all();
         return view('cloths.index',compact('laundry','categories'));
     }

@@ -24,7 +24,13 @@
                             @if(count($orders) > 0)
                                 @foreach($orders as $key=>$value)
                                     <tr>
-                                        <td>{{ $value->id }}</td>
+                                        <td>
+                                        @if($value->status === "Confirm")
+                                            <a href="{{ route('cart.show',['cart'=>$value->id]) }}">{{ $value->id }}</a>
+                                        @else
+                                            {{ $value->id }}
+                                        @endif
+                                        </td>
                                         <td>{{ $value->user?$value->user->name:'-'  }}</td>
                                         <td>{{ $value->created_at  }}</td>
                                         <td>{{ $value->address  }}</td>
