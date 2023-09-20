@@ -52,30 +52,17 @@
                                 <th class="text-end">Unit Price</th>
                                 <th class="text-end">Sub Total</th>
                             </tr>
-                            @if(count($invoice->carts))
-                                @foreach($invoice->carts as $key=>$value)
+                            @if(count($carts)> 0)
+                                @foreach($carts as $key=>$value)
                                     @php
                                         $total = 0;
                                         $quantity = 0;
-                                        foreach ($value->orders as $item) {
-                                            if ($item->washing_price > 0){
-                                                $total += ((integer)$item->washing_price);
-                                                $quantity += ((integer)$item->quantity);
-                                            }
-                                            if ($item->iron_price > 0){
-                                                $total += ((integer)$item->iron_price);
-                                                $quantity += ((integer)$item->quantity);
-                                            }
-                                            if ($item->dry_cleaning_price > 0){
-                                                $total += ((integer)$item->dry_cleaning_price);
-                                                $quantity += ((integer)$item->quantity);
-                                            }
+                                        if ($value->orders){
+                                            $total = (integer)$value->orders->washing_price + (integer)$value->orders->iron_price + (integer)$value->orders->dry_cleaning_price;
                                         }
-                                        dd($total , $invoice->quantity, $invoice->amount);
-                                        $finalAmount = $total * (integer)$value->quantity;
                                     @endphp
                                     <tr>
-                                        <td class="text-center">{{ $value->id }}</td>
+                                        <td class="text-center">{{ $key + 1 }}</td>
                                         <td>
                                             <p class="font-w600 mb-1">{{ $value->types->name }}</p>
                                             <div class="text-muted">
@@ -84,13 +71,13 @@
                                         </td>
                                         <td class="text-center">{{ $value->quantity }}</td>
                                         <td class="text-end"> {{ $total }}</td>
-                                        <td class="text-end">{{ $finalAmount }}</td>
+                                        <td class="text-end">{{ $total * (integer)$value->quantity }}</td>
                                     </tr>
                                 @endforeach
                             @endif
                             <tr>
                                 <td colspan="4" class="fw-bold text-uppercase text-end">Total</td>
-                                <td class="fw-bold text-end h4">$ {{ $invoice->amount }}</td>
+                                <td class="fw-bold text-end h4"> {{ $invoice->amount }}</td>
                             </tr>
                             </tbody>
                         </table>

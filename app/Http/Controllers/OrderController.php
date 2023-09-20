@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderPaymentRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Cart;
 use App\Models\Laundry;
 use App\Models\Order;
 use App\Models\Services;
@@ -119,9 +120,10 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $carts = Cart::with(['types','categories','subCategories','orders'])->where(['request_id'=>$id])->get();
         $invoice = Services::with(['user','assign','carts'])->find($id);
         if ($invoice){
-            return view('invoice.detail',compact('invoice'));
+            return view('invoice.detail',compact('invoice','carts'));
         }
         return redirect()->back()->with('error','Invalid Request ID');
     }

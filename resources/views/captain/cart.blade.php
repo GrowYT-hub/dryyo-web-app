@@ -153,12 +153,15 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#order-submit">
-                        @if(in_array('captain',array_column(Auth::guard()->user()->roles->toArray(),'name')))
-                            <button class="btn btn-primary" onclick="onOrderplace()">Order Place</button>
+                        @if($services->status === "Completed")
+                            Order is {!! $services->status !!}
                         @else
-                            <button class="btn btn-primary" disabled onclick="onOrderplace()">Order Place</button>
+                            @if(in_array('captain',array_column(Auth::guard()->user()->roles->toArray(),'name')))
+                                <button class="btn btn-primary" onclick="onOrderplace()">Order Place</button>
+                            @else
+                                <button class="btn btn-primary" disabled onclick="onOrderplace()">Order Place</button>
+                            @endif
                         @endif
-
                     </a>
                 </div>
             </div>
@@ -190,6 +193,7 @@
                 success: function (response) {
                     // Handle the response
                     var html = '<form id="view-cart-form">';
+                    var order_status = @json($services->status);
                     response.data.map((value, key)=>{
 
                         var washing_price_checkbox = '';
@@ -248,6 +252,14 @@
                                                 </label>
                             `
                         }
+                        var delete_button_html = '';
+                        if (order_status !== "Completed"){
+                            delete_button_html += `
+                            <button  type="button" onclick="onDeleteCart(${value.id})" class="fs-16 btn p-0 cart-trash">
+                                            <i class="fe fe-trash-2 border text-danger brround d-block p-2"></i>
+                                        </button>
+                            `
+                        }
                         html += `<div class="dropdown-item d-flex p-4">
                                     <div class="wd-50p">
                                             <h5 class="mb-5 card-title">${value.sub_categories.name} (${value.types.name})</h5>
@@ -288,9 +300,7 @@
                                     <span id="total-amount-${key}" class="fs-16 text-dark d-none d-sm-block px-4">
                                         0
                                     </span>
-                                        <button  type="button" onclick="onDeleteCart(${value.id})" class="fs-16 btn p-0 cart-trash">
-                                            <i class="fe fe-trash-2 border text-danger brround d-block p-2"></i>
-                                        </button>
+                                        ${delete_button_html}
                                     </div>
                                 </div>`
                     })
