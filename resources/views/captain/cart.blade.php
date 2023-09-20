@@ -56,7 +56,7 @@
                                                                 <div class="w-50">
                                                                     <div class="input-group input-indec input-indec1">
                                                                             <span class="input-group-btn">
-                                                                                @if($services->status === "Completed")
+                                                                                @if($services->status === "Completed" || !in_array('captain',array_column(Auth::guard()->user()->roles->toArray(),'name')))
                                                                                     <button type="button"
                                                                                             class="minus btn btn-white btn-number btn-icon br-7" disabled >
                                                                                     <i class="fa fa-minus text-muted"></i>
@@ -80,7 +80,7 @@
                                                                         @endif
 
                                                                         <span class="input-group-btn">
-                                                                            @if($services->status === "Completed")
+                                                                            @if($services->status === "Completed" || !in_array('captain',array_column(Auth::guard()->user()->roles->toArray(),'name')))
                                                                                 <button type="button"
                                                                                         class="quantity-right-plus btn btn-white btn-number btn-icon br-7 add" disabled>
                                                                                     <i class="fa fa-plus text-muted"></i>
