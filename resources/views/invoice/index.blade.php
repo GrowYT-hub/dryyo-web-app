@@ -30,7 +30,7 @@
                                         <td>{{ $value->created_at  }}</td>
                                         <td>{{ $value->address  }}</td>
                                         <td>{{ $value->quantity }}</td>
-                                        <td>$ {{ $value->amount }}</td>
+                                        <td>₹ {{ $value->amount }}</td>
                                         <td>{{ $value->status }}</td>
                                         <td>
                                             <a href="{{ route('order.edit',['order'=>$value->id]) }}" class="btn btn-primary btn-pill">View</a>

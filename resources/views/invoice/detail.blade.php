@@ -70,14 +70,14 @@
                                             </div>
                                         </td>
                                         <td class="text-center">{{ $value->quantity }}</td>
-                                        <td class="text-end"> {{ $total }}</td>
-                                        <td class="text-end">{{ $total * (integer)$value->quantity }}</td>
+                                        <td class="text-end">₹ {{ $total }}</td>
+                                        <td class="text-end">₹ {{ $total * (integer)$value->quantity }}</td>
                                     </tr>
                                 @endforeach
                             @endif
                             <tr>
                                 <td colspan="4" class="fw-bold text-uppercase text-end">Total</td>
-                                <td class="fw-bold text-end h4"> {{ $invoice->amount }}</td>
+                                <td class="fw-bold text-end h4">₹ {{ $invoice->amount }}</td>
                             </tr>
                             </tbody>
                         </table>
