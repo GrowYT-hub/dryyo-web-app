@@ -8,8 +8,8 @@
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)"></a>
             <!-- sidebar-toggle-->
             <a class="logo-horizontal " href="/captain/dashboard">
-                <img src="{{ url('public/'.$settings->logo) }} }}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{{ url('public/'.$settings->logo) }} }}" class="header-brand-img light-logo1"
+                <img src="{{ url('public/'.$settings->logo) }}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{{ url('public/'.$settings->logo) }}" class="header-brand-img light-logo1"
                     alt="logo">
             </a>
             <!-- LOGO -->

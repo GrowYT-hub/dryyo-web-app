@@ -1,3 +1,6 @@
+@php
+    $settings = \App\Models\Setting::first();
+@endphp
 @extends('layouts.app')
 
 @section('title', 'Invoice')
@@ -10,8 +13,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <a class="header-brand" href="index.html">
-                                <img src="{{ asset('assets/images/brand/logo-dark.png') }}" class="header-brand-img logo-3" alt="Sash logo">
-                                <img src="{{ asset('assets/images/brand/logo-white.png') }}" class="header-brand-img logo" alt="Sash logo">
+                                <img src="{{ url('public/'.$settings->logo) }}" class="header-brand-img logo-3" alt="Sash logo">
+                                <img src="{{ url('public/'.$settings->logo) }}" class="header-brand-img logo" alt="Sash logo">
                             </a>
                             <div>
 {{--                                <address class="pt-3">--}}
