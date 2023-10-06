@@ -20,7 +20,7 @@ class TwilioService
     public function sendSMS($to, $message)
     {
         return $this->client->messages->create(
-            $to,
+            'whatsapp:'.$to,
             [
                 "from" => config('services.twilio.whatsapp_from'),
                 "body" => $message,
