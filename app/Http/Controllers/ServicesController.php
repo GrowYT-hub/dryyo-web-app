@@ -68,7 +68,12 @@ class ServicesController extends Controller
             $services->address = $request->address;
             if ($services->save()){
                 $to = $request->to; // Recipient phone number
-                $message = 'Hello '.$request->name.', Your Order is created successfully. \n Your Order Details below are:  \n Order ID : '.$services->id.', \nName : '.$services->name.', \nSubject : '.$services->subject.', \nAddress : '.$services->address;
+                $message =   'Hello '.$request->name.', Your Order is created successfully.
+Your Order Details are below
+Order ID : '.$services->id.'
+Name : '.$services->name.'
+Subject : '.$services->subject.'
+Address : '.$services->address;
                 $response = $this->twilioService->sendSMS($to, $message);
                 return response()->json(['message' => 'Your request has been sent successfully'], 200);
             }
