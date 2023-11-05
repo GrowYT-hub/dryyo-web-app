@@ -163,7 +163,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Ichtrojan\Otp\OtpServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -232,7 +231,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Otp' => Ichtrojan\Otp\Otp::class,
-        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     ],
 
 ];
