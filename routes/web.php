@@ -47,6 +47,7 @@ Route::middleware(['auth','role:captain'])->prefix('captain')->group(function ()
 
 Route::middleware(['auth','role:captain|admin'])->prefix('captain')->group(function () {
     Route::resource('order', App\Http\Controllers\OrderController::class);
+    Route::get('/send-invoice-whatsapp/{id}', [App\Http\Controllers\OrderController::class,'sendInvoiceWhatsapp'])->name('invoice.sendInvoiceWhatsapp');
     Route::get('/send-sms', [\App\Http\Controllers\SMSController::class, 'sendSMS'])->name('send.sms');
     Route::resource('cart', App\Http\Controllers\CartController::class);
 });

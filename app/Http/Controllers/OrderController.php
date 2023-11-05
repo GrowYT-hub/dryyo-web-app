@@ -10,13 +10,17 @@ use App\Models\Laundry;
 use App\Models\Order;
 use App\Models\Services;
 use App\Models\Types;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class OrderController extends Controller
 {
+    protected $twilioService;
+
+    public function __construct(TwilioService $twilioService)
+    {
+        $this->twilioService = $twilioService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -207,5 +211,38 @@ class OrderController extends Controller
             }
         }
         return view('reports.index',compact('orders','totalSales'));
+    }
+
+    /**
+     * Send Invoice to Whatsapp.
+     * @param  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function sendInvoiceWhatsapp($id){
+        try {
+            $carts = Cart::with(['types','categories','subCategories','orders'])->where(['request_id'=>$id])->get();
+            $invoice = Services::with(['user','assign','carts'])->find($id);
+            if ($invoice){
+
+                $viewHtml = view('invoice.pdf', compact('invoice','carts'))->render();
+                if (!file_exists(public_path('invoice'))){
+                    mkdir(public_path('invoice'),0777,false);
+                }
+                $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($viewHtml);
+                $filename = 'pdf_' . time() . '.pdf';
+                $publicPath = public_path('invoice/' . $filename);
+                $pdf->save($publicPath);
+                $pdfUrl = asset('invoice/' . $filename);
+                $to = $invoice->user->mobile; // Recipient phone number
+                $message =   'Hello,
+Your order id '.$invoice->id.' is completed successfully on '.\Carbon\Carbon::create($invoice->updated_at)->format('Y-m-d').'.
+Please download your invoice from '.$pdfUrl;
+                $response = $this->twilioService->sendWhatsappToFile($to, $message, $pdfUrl);
+                return redirect()->back()->with('message', 'Your invoice has been sent on your customer phone');
+            }
+            return redirect()->back()->withErrors(['status'=> false,'message'=>'Invalid Order Id']);
+        }catch (\Exception $exception){
+            return redirect()->back()->withErrors(['status'=> false,'message'=>$exception->getMessage()]);
+        }
     }
 }

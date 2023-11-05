@@ -27,4 +27,16 @@ class TwilioService
             ]
         );
     }
+
+    public function sendWhatsappToFile($to, $message, $mediaUrl)
+    {
+        return $this->client->messages->create(
+            'whatsapp:'.$to,
+            [
+                "from" => config('services.twilio.whatsapp_from'),
+                "body" => $message,
+                "mediaUrl" => $mediaUrl,
+            ]
+        );
+    }
 }
