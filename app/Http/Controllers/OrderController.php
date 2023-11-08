@@ -227,16 +227,16 @@ class OrderController extends Controller
                 if (!file_exists(public_path('invoice'))){
                     mkdir(public_path('invoice'),0777,false);
                 }
-//                $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($viewHtml);
-//                $filename = 'pdf_' . time() . '.pdf';
-//                $publicPath = public_path('invoice/' . $filename);
-////                $pdf->save($publicPath);
-//                $pdfUrl = asset('invoice/' . $filename);
+                $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($viewHtml);
+                $filename = 'pdf_' . time() . '.pdf';
+                $publicPath = public_path('invoice/' . $filename);
+                $pdf->save($publicPath);
+                $pdfUrl = asset('invoice/' . $filename);
                 $to = $invoice->user->mobile; // Recipient phone number
                 $message =   'Hello,
 Your order id '.$invoice->id.' is completed successfully on '.\Carbon\Carbon::create($invoice->updated_at)->format('Y-m-d').'.
-Please download your invoice from https://dryyo.in/invoice/xyz.pdf';
-                $response = $this->twilioService->sendSMS($to, $message);
+Please download your invoice from '.$pdfUrl;
+                $response = $this->twilioService->sendWhatsappToFile($to, $message, $pdfUrl);
                 return redirect()->back()->with('message', 'Your invoice has been sent on your customer phone');
             }
             return redirect()->back()->withErrors(['status'=> false,'message'=>'Invalid Order Id']);

@@ -74,7 +74,7 @@ Order ID : '.$services->id.'
 Name : '.$services->name.'
 Subject : '.$services->subject.'
 Address : '.$services->address;
-                $response = $this->twilioService->sendSMS($to, $message);
+                $this->twilioService->sendSMS($to, $message);
                 return response()->json(['message' => 'Your request has been sent successfully'], 200);
             }
             return response()->json(['message' => 'Something Went Wrong'],422);
@@ -141,10 +141,10 @@ Address : '.$services->address;
             $services->assigned_id = $request->captain_id;
             $services->status = 'Assigned';
             if ($services->save()){
-//                $customer_to = $services->user->mobile;
-//                $assign_to = $services->assign->mobile;
-//                $this->twilioService->sendSMS($customer_to, $messages);
-//                $this->twilioService->sendSMS($assign_to, $messages);
+                $customer_to = $services->user->mobile;
+                $assign_to = $services->assign->mobile;
+                $this->twilioService->sendSMS($customer_to, $messages);
+                $this->twilioService->sendSMS($assign_to, $messages);
                 return response()->json(['message' => 'Your request has been assigned successfully'], 200);
             }
 
