@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <button type="button" class="btn btn-secondary mb-1" onclick="javascript:window.print();"><i class="si si-paper-plane"></i> Send Invoice</button>
+                    <a href="{{ route('invoice.sendInvoiceWhatsapp',['id'=>$invoice->id]) }}" class="btn btn-secondary mb-1" ><i class="si si-paper-plane"></i> Send Invoice</a>
                     <button type="button" class="btn btn-danger mb-1" onclick="javascript:window.print();"><i class="si si-printer"></i> Print Invoice</button>
                 </div>
             </div>

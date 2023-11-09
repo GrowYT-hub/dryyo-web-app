@@ -68,8 +68,13 @@ class ServicesController extends Controller
             $services->address = $request->address;
             if ($services->save()){
                 $to = $request->to; // Recipient phone number
-                $message = 'Hello '.$request->name.', Your Order is created successfully. \n Your Order Details below are:  \n Order ID : '.$services->id.', \nName : '.$services->name.', \nSubject : '.$services->subject.', \nAddress : '.$services->address;
-                $response = $this->twilioService->sendSMS($to, $message);
+                $message =   'Hello '.$request->name.', Your Order is created successfully.
+Your Order Details are below
+Order ID : '.$services->id.'
+Name : '.$services->name.'
+Subject : '.$services->subject.'
+Address : '.$services->address;
+                $this->twilioService->sendSMS($to, $message);
                 return response()->json(['message' => 'Your request has been sent successfully'], 200);
             }
             return response()->json(['message' => 'Something Went Wrong'],422);
@@ -136,10 +141,10 @@ class ServicesController extends Controller
             $services->assigned_id = $request->captain_id;
             $services->status = 'Assigned';
             if ($services->save()){
-//                $customer_to = $services->user->mobile;
-//                $assign_to = $services->assign->mobile;
-//                $this->twilioService->sendSMS($customer_to, $messages);
-//                $this->twilioService->sendSMS($assign_to, $messages);
+                $customer_to = $services->user->mobile;
+                $assign_to = $services->assign->mobile;
+                $this->twilioService->sendSMS($customer_to, $messages);
+                $this->twilioService->sendSMS($assign_to, $messages);
                 return response()->json(['message' => 'Your request has been assigned successfully'], 200);
             }
 

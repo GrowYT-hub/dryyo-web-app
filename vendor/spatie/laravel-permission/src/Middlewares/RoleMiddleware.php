@@ -11,6 +11,7 @@ class RoleMiddleware
     public function handle($request, Closure $next, $role, $guard = null)
     {
         $authGuard = Auth::guard($guard);
+
         if ($authGuard->guest()) {
             throw UnauthorizedException::notLoggedIn();
         }
@@ -18,6 +19,7 @@ class RoleMiddleware
         $roles = is_array($role)
             ? $role
             : explode('|', $role);
+
         if (! $authGuard->user()->hasAnyRole($roles)) {
             throw UnauthorizedException::forRoles($roles);
         }

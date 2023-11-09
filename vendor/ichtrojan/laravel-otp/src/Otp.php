@@ -27,6 +27,7 @@ class Otp extends Facade
         Model::where('identifier', $identifier)->where('valid', true)->delete();
 
         $token = str_pad($this->generatePin(), 4, '0', STR_PAD_LEFT);
+
         if ($digits == 5)
             $token = str_pad($this->generatePin(5), 5, '0', STR_PAD_LEFT);
 
@@ -65,6 +66,7 @@ class Otp extends Facade
                 $carbon = new Carbon;
                 $now = $carbon->now();
                 $validity = $otp->created_at->addMinutes($otp->validity);
+
                 if (strtotime($validity) < strtotime($now)) {
                     $otp->valid = false;
                     $otp->save();
