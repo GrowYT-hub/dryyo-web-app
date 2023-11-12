@@ -9,11 +9,19 @@ class Laundry extends Model
 {
     use HasFactory;
 
-    public function types(){
-        return $this->hasOne(Types::class,'id','type_id');
+    protected $fillable = [
+        'id',
+        'name',
+        'type_id'
+    ];
+
+    public function types()
+    {
+        return $this->hasOne(Types::class, 'id', 'type_id');
     }
 
-    public function subCategories(){
-        return $this->hasMany(Cloths::class,'category_id','id');
+    public function subCategories()
+    {
+        return $this->hasMany(Cloths::class, 'category_id', 'id');
     }
 }

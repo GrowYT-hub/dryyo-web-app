@@ -20,15 +20,16 @@ class TwilioService
     public function sendSMS($to, $message)
     {
         try {
-            $response =  $this->client->messages->create(
-                'whatsapp:'.$to,
+            $response = $this->client->messages->create(
+                'whatsapp:' . $to,
                 [
                     "from" => config('services.twilio.whatsapp_from'),
                     "body" => $message,
                 ]
             );
-            return $response;
-        }catch (\Exception $exception){
+            return $response->id;
+        } catch (\Exception $exception) {
+            // dd($exception->getMessage());
             return null;
         }
     }
@@ -36,7 +37,7 @@ class TwilioService
     public function sendWhatsappToFile($to, $message, $mediaUrl)
     {
         try {
-            $response =  $this->client->messages->create(
+            $response = $this->client->messages->create(
                 'whatsapp:+918128273971',
                 [
                     "from" => config('services.twilio.whatsapp_from'),
@@ -45,7 +46,7 @@ class TwilioService
                 ]
             );
             return $response;
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return null;
         }
     }

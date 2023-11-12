@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|exists:users,mobile',
-            'password' => 'required|min:6',
+            'name' => $this->name ? 'size:3' : '',
+            'profile_image' => $this->profile_image ? 'image|mimes:jpeg,png,jpg,gif|max:2048' : '',
         ];
     }
 

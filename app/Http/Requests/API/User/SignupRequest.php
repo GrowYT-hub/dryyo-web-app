@@ -26,9 +26,10 @@ class SignupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'mobile' => 'required|unique:users',
+            'name' => 'required|size:3',
+            'mobile' => 'required|unique:users|digits:10',
             'password' => 'required|min:6|confirmed',
+            'send_otp' => 'required|boolean',
         ];
     }
 
@@ -38,6 +39,6 @@ class SignupRequest extends FormRequest
             'success' => false,
             'message' => 'Validation errors',
             'error' => $validator->errors()
-        ]));
+        ], 422));
     }
 }
