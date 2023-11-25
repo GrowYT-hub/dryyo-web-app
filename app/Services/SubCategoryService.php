@@ -17,12 +17,23 @@ class SubCategoryService
      *
      * @return array
      */
-    public function list(): ?array
+    public function list(int $category_id = null): ?array
     {
-        return $this->subCategoryModel
+        $subCategories = $this->subCategoryModel
             ->where("status", 1)
-            ->with('categories')
-            ->get()
+            ->with('categories');
+
+        if ($category_id) {
+            $subCategories = $subCategories->where('category_id', $category_id);
+        }
+        $subCategories = $subCategories->get()
                 ?->toArray() ?? [];
+
+        return $subCategories;
+    }
+
+    public function subCategory(int $subCategoryId = null)
+    {
+        return $this->subCategoryModel->find($subCategoryId)?->toArray();
     }
 }

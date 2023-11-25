@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Services;
 use App\Models\Types;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class OrderController extends Controller
 {

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -18,8 +17,26 @@ class AdminController extends Controller
     {
         $reports = $this->AdminService->reports();
         return response()->json([
-            "status" => true,
+            "status" => 1,
             "data" => $reports
+        ]);
+    }
+
+    public function invoices()
+    {
+        $invoices = $this->AdminService->invoices();
+        return response()->json([
+            "status" => 1,
+            "data" => $invoices
+        ]);
+    }
+
+    public function orders()
+    {
+        $orders = $this->AdminService->orders();
+        return response()->json([
+            "status" => 1,
+            "data" => $orders
         ]);
     }
 }

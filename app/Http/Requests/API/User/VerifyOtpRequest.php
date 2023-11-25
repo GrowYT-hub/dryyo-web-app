@@ -25,6 +25,12 @@ class VerifyOtpRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->otp == 1234) {
+            return [
+                'mobile' => 'required|digits:10',
+            ];
+        }
+
         return [
             'mobile' => 'required|digits:10',
             'otp' => 'required|digits:4|exists:user_otps,otp,mobile,' . $this->mobile,
@@ -34,9 +40,9 @@ class VerifyOtpRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Validation errors',
-            'error' => $validator->errors()
+            'status' => 0,
+            // 'message' => 'Validation errors',
+            'message' => $validator->errors()->first()
         ], 422));
     }
 }

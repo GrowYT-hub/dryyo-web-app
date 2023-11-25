@@ -33,9 +33,9 @@ class SendOtpRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Validation errors',
-            'error' => $validator->errors()
+            'status' => 0,
+            // 'message' => 'Validation errors',
+            'message' => $validator->errors()->first()
         ], 422));
     }
 }

@@ -47,4 +47,22 @@ class AdminService
             "totalSales" => $totalSales,
         ];
     }
+
+    public function invoices()
+    {
+        $orders = $this->serviceModel->with(['user', 'assign'])->where('status', 'Completed')->get();
+
+        return [
+            'orders' => $orders
+        ];
+    }
+
+    public function orders()
+    {
+        $orders = $this->serviceModel->with(['user', 'assign'])->get();
+
+        return [
+            'orders' => $orders
+        ];
+    }
 }

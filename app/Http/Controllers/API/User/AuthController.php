@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\User;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\User\ChangePasswordRequest;
 use App\Http\Requests\API\User\LoginRequest;
@@ -27,16 +28,17 @@ class AuthController extends Controller
                 'name' => $request->input('name'),
                 'mobile' => $request->input('mobile'),
                 'password' => bcrypt($request->input('password')),
+                'user_type' => $request->input('user_type'),
             ];
 
             $user = $this->userService->signup($user_data);
 
-            return response()->json(['success' => true, 'message' => 'User registered successfully'], 201);
+            return response()->json(['status' => 1, 'message' => 'User registered successfully'], 201);
         } else {
             $otp = rand(1000, 9999);
             $res = $this->userService->sendOtp($request->all(), $otp);
 
-            return response()->json(['success' => true, 'message' => 'Otp sent'], 200);
+            return response()->json(['status' => 1, 'message' => 'Otp sent'], 200);
         }
 
     }
@@ -47,9 +49,9 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
 
-            return response()->json(['success' => true, 'data' => ['user' => $user, 'token' => $token]], 200);
+            return response()->json(['status' => 1, 'data' => ['user' => $user, 'token' => $token]], 200);
         } else {
-            return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
+            return response()->json(['status' => 0, 'message' => 'Invalid credentials'], 401);
         }
     }
 
@@ -57,20 +59,24 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
-        return response()->json(['success' => true, 'data' => ['user' => $user]], 200);
+        return response()->json(['status' => 1, 'data' => ['user' => $user]], 200);
     }
 
     public function verifyOtp(VerifyOtpRequest $request)
     {
-        return response()->json(['success' => true, 'message' => 'The selected otp is valid.'], 200);
+        return response()->json(['status' => 1, 'message' => 'The selected otp is valid.'], 200);
     }
 
     public function sendOtp(SendOtpRequest $request)
     {
         $otp = rand(1000, 9999);
-        $res = $this->userService->sendOtp($request->all(), $otp);
+        try {
+            $res = $this->userService->sendOtp($request->all(), $otp);
+        } catch (\Exception $e) {
+            \Log::debug($e->getMessage());
+        }
 
-        return response()->json(['success' => true, 'message' => 'Otp sent'], 200);
+        return response()->json(['status' => 1, 'message' => 'Otp sent', 'data' => ['otp' => $otp]], 200);
     }
 
     public function changePassword(ChangePasswordRequest $request)
@@ -78,10 +84,10 @@ class AuthController extends Controller
         $res = $this->userService->changePassword($request->all());
 
         if (!$res) {
-            return response()->json(['success' => false, 'message' => 'Invalid request'], 400);
+            return response()->json(['status' => 0, 'message' => 'Invalid request'], 400);
         }
 
-        return response()->json(['success' => true, 'message' => "Password changed"], 200);
+        return response()->json(['status' => 1, 'message' => "Password changed"], 200);
     }
 
     public function updateProfile(UpdateProfileRequest $request)
@@ -89,9 +95,16 @@ class AuthController extends Controller
         $res = $this->userService->updateProfile($request);
 
         if (!$res) {
-            return response()->json(['success' => false, 'message' => "Invalid request"], 400);
+            return response()->json(['status' => 0, 'message' => "Invalid request"], 400);
         }
 
-        return response()->json(['success' => true, 'message' => "Profile updated"], 200);
+        return response()->json(['status' => 1, 'message' => "Profile updated"], 200);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return Helper::success('Logged out successfully');
     }
 }

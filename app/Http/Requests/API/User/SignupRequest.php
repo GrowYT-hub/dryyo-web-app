@@ -26,19 +26,20 @@ class SignupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|size:3',
+            'name' => 'required|min:3',
             'mobile' => 'required|unique:users|digits:10',
             'password' => 'required|min:6|confirmed',
             'send_otp' => 'required|boolean',
+            'user_type' => 'required',
         ];
     }
 
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Validation errors',
-            'error' => $validator->errors()
+            'status' => 0,
+            // 'message' => 'Validation errors',
+            'message' => $validator->errors()->first()
         ], 422));
     }
 }

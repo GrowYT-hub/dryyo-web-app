@@ -33,11 +33,16 @@ class UserService
 
     public function sendOtp(array $data = [], int $otp = null)
     {
-        $message = "Your Dryyo code is: " . $otp;
-        $res = $this->twilioService->sendSMS("+91" . $data['mobile'], $message);
+        try {
+            $message = "Your Dryyo code is: " . $otp;
+            $res = $this->twilioService->sendSMS("+91" . $data['mobile'], $message);    
+        } catch (\Exception $e) {
+            \Log::debug($e->getMessage());
+        }
+        
         $this->storeOtp($data, $otp);
 
-        return $res;
+        return true;
     }
 
     public function storeOtp(array $data = [], int $otp = null)
@@ -93,7 +98,8 @@ class UserService
         }
 
         if (count($data)) {
-            return $this->userModel->whereId(auth()->user()->id)->update($data);
+            $this->userModel->whereId(auth()->user()->id)->update($data);
+            return true;
         }
 
         return false;

@@ -26,7 +26,7 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => $this->name ? 'size:3' : '',
+            'name' => 'required|min:3',
             'profile_image' => $this->profile_image ? 'image|mimes:jpeg,png,jpg,gif|max:2048' : '',
         ];
     }
@@ -34,9 +34,9 @@ class UpdateProfileRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Validation errors',
-            'error' => $validator->errors()
+            'status' => 0,
+            // 'message' => 'Validation errors',
+            'message' => $validator->errors()->first()
         ], 422));
     }
 }

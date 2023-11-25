@@ -18,18 +18,8 @@ class SettingController extends Controller
         $types = $this->SettingService->types()?->toArray() ?? [];
 
         return response()->json([
-            "status" => true,
+            "status" => 1,
             "data" => $types
-        ], 200);
-    }
-
-    public function categories()
-    {
-        $categories = $this->SettingService->categories()?->toArray() ?? [];
-
-        return response()->json([
-            "status" => true,
-            "data" => $categories
         ], 200);
     }
 
@@ -38,7 +28,7 @@ class SettingController extends Controller
         $categories = $this->SettingService->subCategories()?->toArray() ?? [];
 
         return response()->json([
-            "status" => true,
+            "status" => 1,
             "data" => $categories
         ], 200);
     }
